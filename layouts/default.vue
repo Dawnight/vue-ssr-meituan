@@ -1,7 +1,18 @@
 <template>
-  <div>
-    <nuxt/>
-  </div>
+  <el-container>
+    <el-header>
+      <el-button
+        type="primary"
+        size="mini"
+      >click</el-button>
+    </el-header>
+    <el-main>
+      <nuxt />
+    </el-main>
+    <el-footer>
+      footer
+    </el-footer>
+  </el-container>
 </template>
 
 <style>
