@@ -1,6 +1,6 @@
 import Router from 'koa-router';
 import Redis from 'koa-redis';
-import nodeMailer from 'node-mailer';
+import nodeMailer from 'nodemailer';
 import User from '../models/users';
 import Passport from './utils/passport';
 import Email from '../config';
@@ -8,13 +8,13 @@ import axios from './utils/axios';
 
 const NODEMAIL = 'nodemail:';
 
-let router = new Router({
+let usersRouter = new Router({
   prefix: '/users'
 });
 
 let Store = new Redis().client;
 
-router.post('/signup', async ctx => {
+usersRouter.post('/signup', async ctx => {
   const { username, password, email, code } = ctx.request.body;
 
   if (code) {
@@ -79,7 +79,7 @@ router.post('/signup', async ctx => {
   }
 });
 
-router.post('/signin', async (ctx, next) => {
+usersRouter.post('/signin', async (ctx, next) => {
   return Passport.authenticate('local', (error, user, info, status) => {
     if (error) {
       ctx.body = {
@@ -104,7 +104,7 @@ router.post('/signin', async (ctx, next) => {
   })(ctx, next);
 });
 
-router.post('/verity', async (ctx, next) => {
+usersRouter.post('/verity', async (ctx, next) => {
   let { username, email } = ctx.request.body;
   const saveExpire = Store.hget(`${NODEMAIL}${username}`, 'expire');
   if (saveExpire && new Date().getTime() - saveExpire < 0) {
@@ -116,6 +116,7 @@ router.post('/verity', async (ctx, next) => {
   }
 
   let transporter = nodeMailer.createTransport({
+    service: 'qq',
     host: Email.smtp.host,
     post: Email.smtp.port,
     secure: false,
@@ -158,7 +159,7 @@ router.post('/verity', async (ctx, next) => {
 
 });
 
-router.get('/exit', async (ctx, next) => {
+usersRouter.get('/exit', async (ctx, next) => {
   // 注销
   await ctx.logout();
   // 二次验证
@@ -173,7 +174,7 @@ router.get('/exit', async (ctx, next) => {
   }
 });
 
-router.get('/getUser', async (ctx, next) => {
+usersRouter.get('/getUser', async (ctx, next) => {
   if (ctx.isAuthenticated) {
     const { username, email } = ctx.session.passport.user;
     ctx.body = {
@@ -188,4 +189,4 @@ router.get('/getUser', async (ctx, next) => {
   }
 });
 
-export default router;
+export default usersRouter;

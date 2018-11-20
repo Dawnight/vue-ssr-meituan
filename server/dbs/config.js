@@ -19,7 +19,7 @@ export default {
       return 'weizhiqimail@foxmail.com';
     },
     get pass() {
-      return '-----';
+      return '---';
     },
     get code() {
       return  () => {

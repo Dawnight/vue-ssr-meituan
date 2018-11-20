@@ -10,7 +10,7 @@ import json from 'koa-json';
 import  config from '../nuxt.config.js';
 import dbConfig from './dbs/config';
 import passport from './dbs/interface/utils/passport';
-import users from './dbs/interface/users';
+import usersRouter from './dbs/interface/users';
 
 const app = new Koa();
 const host = process.env.HOST || '127.0.0.1';
@@ -43,8 +43,7 @@ async function start() {
     const builder = new Builder(nuxt);
     await builder.build();
   }
-
-  app.use(users.routes()).use(users.allowedMethods());
+  app.use(usersRouter.routes()).use(usersRouter.allowedMethods());
 
   app.use(ctx => {
     ctx.status = 200; // koa defaults to 404 when it sees that status is unset

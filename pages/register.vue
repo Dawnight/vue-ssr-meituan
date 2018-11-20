@@ -34,7 +34,7 @@
             size="mini"
             round
             @click="sendMessage">发送验证码</el-button>
-          <span class="status">{{ statusMessage }}</span>
+          <span class="status">{{ statusMsg }}</span>
         </el-form-item>
         <el-form-item
           label="验证码"
@@ -73,6 +73,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   layout: 'blank',
   data () {
@@ -104,12 +105,48 @@ export default {
         pwd: '',
         cpwd: ''
       },
-      statusMessage: '',
+      statusMsg: '',
       error: ''
     };
   },
   methods: {
-    sendMessage () {},
+    sendMessage () {
+      let that = this;
+      let namePass;
+      let emailPass;
+      if(this.timerid) {
+        return false;
+      }
+      this.$refs['ruleForm'].validateField('name', valid => {
+        namePass = valid;
+      });
+      this.statusMsg = '';
+      if (namePass) {
+        return false;
+      }
+      this.$refs['ruleForm'].validateField('email', valid => {
+        emailPass = valid;
+      });
+      let param = {};
+      param.username = encodeURIComponent(this.ruleForm.name);
+      param.email = this.ruleForm.email;
+      if (!namePass && !emailPass) {
+        axios.post('/users/verity', param).then(({ status, data }) => {
+          if (status === 200 && data && data.code === 0) {
+            let count = 60;
+            that.statusMsg = `验证码已发送，剩余${count--}秒`;
+            that.timerid = setInterval(() => {
+              that.statusMsg = `验证码已发送，剩余${count--}秒`;
+              if (count === 0) {
+                clearInterval(that.timerid);
+              }
+            }, 1000);
+          } else {
+            that.statusMsg = data.msg;
+          }
+        });
+      }
+    },
     agreeRegister () {},
   }
 };
