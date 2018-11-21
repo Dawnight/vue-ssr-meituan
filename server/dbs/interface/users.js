@@ -20,20 +20,22 @@ usersRouter.post('/signup', async ctx => {
   if (code) {
     const saveCode = await Store.hget(`${NODEMAIL}${username}`, 'code');
     const saveExpire = await Store.hget(`${NODEMAIL}${username}`, 'expire');
-    if (code === saveCode) {
-      if (new Date.getTime() - saveExpire > 0) {
+    console.log(saveCode);
+    console.log(code);
+    if (String(code) === String(saveCode)) {
+      if (new Date().getTime() - saveExpire > 0) {
         ctx.body = {
           code: -1,
           msg: '验证码已经过期，请重新尝试'
         };
         return false;
-      } else {
-        ctx.body = {
-          code: -1,
-          msg: '请填写正确的验证码'
-        };
-        return false;
       }
+    } else {
+      ctx.body = {
+        code: -1,
+        msg: '请填写正确的验证码'
+      };
+      return false;
     }
   } else {
     ctx.body = {

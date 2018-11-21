@@ -74,6 +74,7 @@
 
 <script>
 import axios from 'axios';
+import CryptoJS from 'crypto-js';
 export default {
   layout: 'blank',
   data () {
@@ -147,7 +148,34 @@ export default {
         });
       }
     },
-    agreeRegister () {},
+    agreeRegister () {
+      let that = this;
+      this.$refs['ruleForm'].validate(valid => {
+        if (valid) {
+          let username = encodeURIComponent(that.ruleForm.name);
+          let password = CryptoJS.MD5(that.ruleForm.pwd).toString();
+          let param = {};
+          param.username = username;
+          param.password = password;
+          param.email = that.ruleForm.email;
+          param.code = that.ruleForm.code;
+          axios.post('/users/signup', param).then(({status, data}) => {
+            if (status === 200) {
+              if (data && data.code === 0) {
+                location.href = '/login';
+              } else {
+                that.error = data.msg;
+              }
+            } else {
+              that.error = `服务器出错，错误码: ${status}`;
+            }
+            setTimeout(() => {
+              that.error = '';
+            }, 1500);
+          });
+        }
+      });
+    },
   }
 };
 </script>
