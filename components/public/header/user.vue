@@ -18,11 +18,21 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   data () {
     return {
       user: ''
     };
+  },
+  mounted () {
+    axios.get('/users/getUser').then(({status, data}) => {
+      if (status === 200) {
+        if (data) {
+          this.user = data.user;
+        }
+      }
+    });
   }
 };
 </script>

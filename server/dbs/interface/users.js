@@ -20,8 +20,6 @@ usersRouter.post('/signup', async ctx => {
   if (code) {
     const saveCode = await Store.hget(`${NODEMAIL}${username}`, 'code');
     const saveExpire = await Store.hget(`${NODEMAIL}${username}`, 'expire');
-    console.log(saveCode);
-    console.log(code);
     if (String(code) === String(saveCode)) {
       if (new Date().getTime() - saveExpire > 0) {
         ctx.body = {
@@ -165,7 +163,8 @@ usersRouter.get('/exit', async (ctx, next) => {
   // 注销
   await ctx.logout();
   // 二次验证
-  if (!ctx.isAuthenticated) {
+  // console.log('ctx.isAuthenticated: ', ctx.isAuthenticated);
+  if (Object.keys(ctx.session.passport).length === 0) {
     ctx.body = {
       code: 0
     };
@@ -177,14 +176,14 @@ usersRouter.get('/exit', async (ctx, next) => {
 });
 
 usersRouter.get('/getUser', async (ctx, next) => {
-  if (ctx.isAuthenticated) {
+  if (ctx.session.passport && ctx.session.passport.user) {
     const { username, email } = ctx.session.passport.user;
     ctx.body = {
       user: username,
       email,
     };
   } else {
-    ctx.bosy = {
+    ctx.body = {
       user: '',
       email: ''
     };
