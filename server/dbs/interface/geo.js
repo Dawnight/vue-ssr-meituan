@@ -13,8 +13,8 @@ const sign = 'getGeoSign';
 geoRouter.get('/getPosition', async ctx => {
   // let {status, data: {province, city}} = await axios.get(`http://cp-tools.cn/geo/getPosition?sign=${sign}`);
   let status = 200;
-  let province = '广东省';
-  let city = '深圳市';
+  let province = '海南省';
+  let city = '三亚市';
   if (status === 200) {
     ctx.body = {
       province,

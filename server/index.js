@@ -12,6 +12,7 @@ import dbConfig from './dbs/config';
 import passport from './dbs/interface/utils/passport';
 import usersRouter from './dbs/interface/users';
 import geoRouter from './dbs/interface/geo';
+import searchRouter from './dbs/interface/search';
 
 const app = new Koa();
 const host = process.env.HOST || '127.0.0.1';
@@ -46,6 +47,7 @@ async function start() {
   }
   app.use(usersRouter.routes()).use(usersRouter.allowedMethods());
   app.use(geoRouter.routes()).use(geoRouter.allowedMethods());
+  app.use(searchRouter.routes()).use(searchRouter.allowedMethods());
 
   app.use(ctx => {
     ctx.status = 200; // koa defaults to 404 when it sees that status is unset

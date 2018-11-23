@@ -6,27 +6,32 @@
         :class="{active:kind==='all'}"
         kind="all"
         keyword="景点"
-      >全部</dd>
+      >全部
+      </dd>
       <dd
         :class="{active:kind==='party'}"
         kind="party"
         keyword="美食"
-      >约会聚餐</dd>
+      >约会聚餐
+      </dd>
       <dd
         :class="{active:kind==='spa'}"
         kind="spa"
         keyword="丽人"
-      >丽人SPA</dd>
+      >丽人SPA
+      </dd>
       <dd
         :class="{active:kind==='movie'}"
         kind="movie"
         keyword="电影"
-      >电影演出</dd>
+      >电影演出
+      </dd>
       <dd
         :class="{active:kind==='travel'}"
         kind="travel"
         keyword="出游"
-      >品质出游</dd>
+      >品质出游
+      </dd>
     </dl>
     <ul class="ibody">
       <li
@@ -49,31 +54,59 @@
 </template>
 
 <script>
-export default {
-  data () {
-    return {
-      kind: 'all',
-      list: {
-        all: [],
-        party: [],
-        spa: [],
-        movie: [],
-        travel: []
+  export default {
+    data() {
+      return {
+        kind: 'all',
+        list: {
+          all: [],
+          party: [],
+          spa: [],
+          movie: [],
+          travel: []
+        }
+      };
+    },
+    computed: {
+      current() {
+        return this.list[this.kind];
       }
-    };
-  },
-  computed: {
-    current () {
-      return this.list[this.kind];
+    },
+    methods: {
+      handleMouseOver: async function(e) {
+        let dom = e.target;
+        let tag = dom.tagName.toLowerCase();
+        let self = this;
+        if (tag === 'dd') {
+          this.kind = dom.getAttribute('kind');
+          let keyword = dom.getAttribute('keyword');
+          console.log(this.kind, keyword);
+          let { status, data: { count, pois } } = await self.$axios.get('/search/resultsByKeywords', {
+            params: {
+              keyword,
+              city: self.$store.state.geo.position.city
+            }
+          });
+          if (status === 200 && count > 0) {
+            let r = pois.filter(item => item.photos.length).map(item => {
+              return {
+                title: item.name,
+                pos: item.type.split(';')[0],
+                price: item.biz_ext.cost || '暂无',
+                img: item.photos[0].url,
+                url: '//abc.com'
+              };
+            });
+            self.list[self.kind] = r.slice(0, 9);
+          } else {
+            self.list[self.kind] = [];
+          }
+        }
+      }
     }
-  },
-  methods: {
-    handleMouseOver(){
-    }
-  }
-};
+  };
 </script>
 
 <style lang="scss">
-@import "@/assets/css/index/artistic.scss";
+  @import "@/assets/css/index/artistic.scss";
 </style>
