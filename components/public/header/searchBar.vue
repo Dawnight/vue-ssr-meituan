@@ -27,7 +27,8 @@
             <dt>热门搜索</dt>
             <dd
               v-for="(item, index) in $store.state.home.hotPlace"
-              :key="index">{{ item.name }}
+              :key="index">
+              <a :href="'/products?keyword=' + encodeURIComponent(item.name)">{{ item.name }}</a>
             </dd>
           </dl>
           <dl
@@ -35,7 +36,8 @@
             class="searchList">
             <dd
               v-for="(item, index) in searchList"
-              :key="index">{{ item.name }}
+              :key="index">
+              <a :href="'/products?keyword=' + encodeURIComponent(item.name)">{{ item.name }}</a>
             </dd>
           </dl>
         </div>
@@ -43,7 +45,7 @@
           <a
             v-for="(item, index) in $store.state.home.hotPlace"
             :key="index"
-            href="#">{{ item.name }}</a>
+            :href="'/products?keyword=' + encodeURIComponent(item.name)">{{ item.name }}</a>
         </p>
         <ul class="nav">
           <li>
