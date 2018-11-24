@@ -15,18 +15,19 @@
 </template>
 
 <script>
-import EMenu from '@/components/index/menu';
-import Life from '@/components/index/life';
-import Artistic from '@/components/index/artistic';
-export default {
-  components: {
-    EMenu,
-    Life,
-    Artistic
-  }
-};
+  import EMenu from '@/components/index/menu';
+  import Life from '@/components/index/life';
+  import Artistic from '@/components/index/artistic';
+
+  export default {
+    components: {
+      EMenu,
+      Life,
+      Artistic
+    }
+  };
 </script>
 
 <style lang="scss">
-@import '@/assets/css/index/index.scss';
+  @import '@/assets/css/index/index.scss';
 </style>

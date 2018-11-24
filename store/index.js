@@ -20,11 +20,13 @@ const store = () => new Vuex.Store({
       commit('home/setMenu', status === 200 ? menu : []);
       let hotPlaceResult = await app.$axios.get('/search/hotPlace',
         {
-          params: { city: app.store.state.geo.position.city.replace('市', ''),
-            type: '丽人' }
+          params: {
+            city: app.store.state.geo.position.city.replace('市', ''),
+            type: '丽人'
+          }
         });
       status = hotPlaceResult.status;
-      commit('home/setHotPlace', status === 200 ? hotPlaceResult.data: []);
+      commit('home/setHotPlace', status === 200 ? hotPlaceResult.data : []);
     }
   }
 });

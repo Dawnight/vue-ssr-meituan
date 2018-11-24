@@ -4,7 +4,7 @@ import UserModel from '../../models/users';
 
 passport.use(new LocalStrategy(async (username, password, done) => {
   let where = {
-    username,
+    username
   };
 
   let result = await UserModel.findOne(where);

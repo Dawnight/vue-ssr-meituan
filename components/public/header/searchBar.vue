@@ -27,14 +27,16 @@
             <dt>热门搜索</dt>
             <dd
               v-for="(item, index) in $store.state.home.hotPlace"
-              :key="index">{{ item.name }}</dd>
+              :key="index">{{ item.name }}
+            </dd>
           </dl>
           <dl
             v-if="isSearchList"
             class="searchList">
             <dd
               v-for="(item, index) in searchList"
-              :key="index">{{ item.name }}</dd>
+              :key="index">{{ item.name }}
+            </dd>
           </dl>
         </div>
         <p class="suggest">

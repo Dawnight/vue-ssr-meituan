@@ -7,7 +7,7 @@ import session from 'koa-generic-session';
 import Redis from 'koa-redis';
 import json from 'koa-json';
 
-import  config from '../nuxt.config.js';
+import config from '../nuxt.config.js';
 import dbConfig from './dbs/config';
 import passport from './dbs/interface/utils/passport';
 import usersRouter from './dbs/interface/users';
@@ -27,10 +27,10 @@ app.use(session({
   prefix: 'mt:uid',
   store: new Redis()
 }));
-app.use(bodyParser({extendTypes: ['json', 'form', 'text']}));
+app.use(bodyParser({ extendTypes: ['json', 'form', 'text'] }));
 app.use(json());
 mongoose.connect(dbConfig.dbs, {
-  useNewUrlParser: true,
+  useNewUrlParser: true
 });
 app.use(passport.initialize());
 app.use(passport.session());
@@ -64,7 +64,7 @@ async function start() {
 
   app.listen(port, host);
   consola.ready({
-    message: `Server listening on http://${host}:${port}`,
+    message: `Server listening on http://localhost:${port}`,
     badge: true
   });
 }

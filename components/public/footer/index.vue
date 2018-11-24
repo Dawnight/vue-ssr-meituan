@@ -117,7 +117,8 @@
           </dl>
         </div>
         <div class="footer-column">
-          <dl><dt>代理商加盟</dt>
+          <dl>
+            <dt>代理商加盟</dt>
             <dd><a
               rel="nofollow"
               href="https://i.meituan.com/awp/hfe/block/4544/index.html"
@@ -236,9 +237,10 @@
       </div>
       <div class="footer-copyright clearfix">
         <div class="footer-copyright-left">
-          <p>©网团购 meituan.com <a href="http://www.beianbeian.com/beianxinxi/283f39a9-4c00-427a-97ef-3c7a9e1e0af1.html">京ICP证070791号</a> <a href="http://www.miitbeian.gov.cn/">京ICP备10211739号</a> <a
-            href="http://www.meituan.com/about/rules"
-            target="_blank">电子公告服务规则</a>
+          <p>©网团购 meituan.com <a href="http://www.beianbeian.com/beianxinxi/283f39a9-4c00-427a-97ef-3c7a9e1e0af1.html">京ICP证070791号</a>
+            <a href="http://www.miitbeian.gov.cn/">京ICP备10211739号</a> <a
+              href="http://www.meituan.com/about/rules"
+              target="_blank">电子公告服务规则</a>
           </p>
           <p>
             <a
@@ -264,12 +266,13 @@
               class="sp-ft sp-ft--12315"
               href="http://www.bj315.org/xfwq/lstd/201209/t20120910_3344.shtml?dnrpluojqxbceiqq"
               title="12315消费争议"
-              target="_blank">12315消费争议</a></div></div>
+              target="_blank">12315消费争议</a></div>
+        </div>
       </div>
     </div>
   </footer>
 </template>
 
 <style lang="scss">
-@import "@/assets/css/public/footer.scss";
+  @import "@/assets/css/public/footer.scss";
 </style>

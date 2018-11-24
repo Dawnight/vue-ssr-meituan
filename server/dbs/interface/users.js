@@ -42,7 +42,7 @@ usersRouter.post('/signup', async ctx => {
     };
   }
 
-  let user = await User.find({username});
+  let user = await User.find({ username });
   if (user.length) {
     ctx.body = {
       code: -1,
@@ -58,12 +58,12 @@ usersRouter.post('/signup', async ctx => {
   });
 
   if (nuser) {
-    let res = await axios.post('/users/signin', {username, password});
+    let res = await axios.post('/users/signin', { username, password });
     if (res.data && res.data.code === 0) {
       ctx.body = {
         code: 0,
         msg: '注册成功',
-        user: res.data.user,
+        user: res.data.user
       };
     } else {
       ctx.body = {
@@ -122,7 +122,7 @@ usersRouter.post('/verity', async (ctx, next) => {
     secure: false,
     auth: {
       user: Email.smtp.user,
-      pass: Email.smtp.pass,
+      pass: Email.smtp.pass
     }
   });
 
@@ -130,7 +130,7 @@ usersRouter.post('/verity', async (ctx, next) => {
     code: Email.smtp.code(),
     expire: Email.smtp.expire(),
     email: email,
-    user: username,
+    user: username
   };
 
   let mailOption = {
@@ -180,7 +180,7 @@ usersRouter.get('/getUser', async (ctx, next) => {
     const { username, email } = ctx.session.passport.user;
     ctx.body = {
       user: username,
-      email,
+      email
     };
   } else {
     ctx.body = {

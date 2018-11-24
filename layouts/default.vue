@@ -4,7 +4,7 @@
       <m-header/>
     </el-header>
     <el-main>
-      <nuxt />
+      <nuxt/>
     </el-main>
     <el-footer height="100%">
       <m-footer/>
@@ -13,13 +13,13 @@
 </template>
 
 <script>
-import MHeader from '@/components/public/header/index';
-import MFooter from '@/components/public/footer/index';
+  import MHeader from '@/components/public/header/index';
+  import MFooter from '@/components/public/footer/index';
 
-export default {
-  components: {
-    MHeader,
-    MFooter
-  }
-};
+  export default {
+    components: {
+      MHeader,
+      MFooter
+    }
+  };
 </script>
